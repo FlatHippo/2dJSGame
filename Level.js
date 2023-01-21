@@ -1,91 +1,81 @@
-levels.push(new Level({levelBoundaries: level1Boundaries}));
-let level1Boundaries = [
+level1Boundaries = [
     {
         "position": {
-            "x": 1274,
-            "y": 146
+            "x": 413,
+            "y": 200
         },
-        "width": 250,
-        "height": 410
+        "width": 885,
+        "height": 604,
+        "image": {}
     },
     {
         "position": {
-            "x": 12,
-            "y": 20
+            "x": 876,
+            "y": 8
         },
-        "width": 1638,
-        "height": 170
+        "width": 0,
+        "height": 200,
+        "image": {}
+    }
+]
+level2Boundaries = [
+    {
+        "position": {
+            "x": 21,
+            "y": 24
+        },
+        "width": 1888,
+        "height": 356,
+        "image": {}
     },
     {
         "position": {
-            "x": 45,
+            "x": 38,
+            "y": 681
+        },
+        "width": 1864,
+        "height": 383,
+        "image": {}
+    },
+    {
+        "position": {
+            "x": 1190,
+            "y": 417
+        },
+        "width": 538,
+        "height": 88,
+        "image": {}
+    },
+    {
+        "position": {
+            "x": 462,
             "y": 556
         },
-        "width": 1501,
-        "height": 182
-    },
-    {
-        "position": {
-            "x": 36,
-            "y": 745
-        },
-        "width": 1625,
-        "height": 231
-    },
-    {
-        "position": {
-            "x": 1578,
-            "y": 177
-        },
-        "width": 108,
-        "height": 536
-    },
-    {
-        "position": {
-            "x": 974,
-            "y": 277
-        },
-        "width": 78,
-        "height": 33
-    },
-    {
-        "position": {
-            "x": 849,
-            "y": 301
-        },
-        "width": 55,
-        "height": 59
-    },
-    {
-        "position": {
-            "x": 914,
-            "y": 473
-        },
-        "width": 91,
-        "height": 21
-    },
-    {
-        "position": {
-            "x": 678,
-            "y": 404
-        },
-        "width": 63,
-        "height": 14
-    },
-    {
-        "position": {
-            "x": 588,
-            "y": 252
-        },
-        "width": 81,
-        "height": 17
+        "width": 504,
+        "height": 78,
+        "image": {}
     }
-];
+]
+
+let levels = [];
 class Level{
     constructor({levelBoundaries}){
         this.levelBoundaries = levelBoundaries
     }
     loadLevel(){
-        console.log("working");
+        InstantiateWallBoundaries();
+        for(let i = 0; i < this.levelBoundaries.length; i++){
+            boundaries.push(new Boundary(
+                {
+                    position: {x: this.levelBoundaries[i].position.x, y: this.levelBoundaries[i].position.y},
+                    width: this.levelBoundaries[i].width,
+                    height: this.levelBoundaries[i].height
+                }));
+        }
+        console.log()
     }
 }
+levels.push(new Level({levelBoundaries: level1Boundaries}));
+levels.push(new Level({levelBoundaries: level2Boundaries}));
+initializeLevel(currentLevel);
+

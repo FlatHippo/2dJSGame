@@ -7,17 +7,23 @@ const backgroundImg = new Image();
 backgroundImg.src = './images/background.jpg';
 const playerImg = new Image();
 playerImg.src = './images/player.png';
+const wallImg = new Image();
+wallImg.src = './images/wall.jpg';
 let playerSpeed = 2.5;
 let boundaries = [];
-let currentLevel = null;
-let levels = [];
-
+let deaths = 0;
 //#endregion
-
-function initializeLevel(levelNum){
-    levels[levelNum]
+function updateDeaths(){
+    context.font = "50px Sofia Sans Regular";
+    context.fillStyle = 'white';
+    context.fillText("Deaths: " + deaths, 100, 100);
 }
-initializeLevel(0);
+function initializeLevel(levelNum){
+    if(boundaries.length > 0) 
+        boundaries = [];
+    levels[levelNum].loadLevel();
+    goal.updateGoal({position: {x: goalPositions[currentLevel][1][0], y: goalPositions[currentLevel][1][1]}});
+}
 class Sprite{
     constructor({position, startPositon, image, scale, rotation = 0}){
         this.position = position;
@@ -45,10 +51,10 @@ class Boundary{
         this.position = position;
         this.width = width;
         this.height = height;
+        this.image = wallImg;
     }
     draw(){
-        context.fillStyle = 'red';
-        context.fillRect(this.position.x, this.position.y, this.width, this.height);
+        context.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
     }
 }
 class Timer{
@@ -78,7 +84,6 @@ function isColliding(sprite, boundary){
         sprite.position.x <= boundary.position.x + boundary.width && 
         sprite.position.y + sprite.image.height >= boundary.position.y && 
         sprite.position.y <= boundary.position.y + boundary.height){
-            console.log("collid");
             return true;
     }
 }
@@ -90,17 +95,38 @@ const background = new Sprite(
     });
 const player = new Sprite(
     {
-        position: {x: 200, y: 350},
-        startPositon: {x: 200, y: 350},
+        position: {x: 150, y: 450},
+        startPositon: {x: 150, y: 450},
         image: playerImg,
         scale: {x: 1, y: 1}
     });
-const testBoundary = new Boundary(
-    {
-        position: {x: 400, y: 400},
-        width: 100,
-        height: 100
-    });
+
+function InstantiateWallBoundaries(){
+    const leftWall = new Boundary({
+        position: {x: -50, y: 0},
+        width: 0,
+        height: 1080
+    })
+    const rightWall = new Boundary({
+        position: {x: canvas.width + 50, y: 0},
+        width: 0,
+        height: 1080
+    })
+    const topWall = new Boundary({
+        position: {x: 0, y: -50},
+        width: 1920,
+        height: 0
+    })
+    const bottomWall = new Boundary({
+        position: {x: 0, y: canvas.height + 50},
+        width: 1920,
+        height: 0
+    })
+    boundaries.push(leftWall);
+    boundaries.push(rightWall);
+    boundaries.push(topWall);
+    boundaries.push(bottomWall);
+}
 const playerSpeedRandomizer = new Timer();
 const keys = {
     w: {
@@ -121,8 +147,9 @@ let previousTime = Date.now();
 function Update(){
     window.requestAnimationFrame(Update);
     background.draw();
-    testBoundary.draw();
+    updateDeaths();
     player.draw();
+    goal.draw();
     boundaries.forEach(boundary => {
         if(boundary){
             boundary.draw();
@@ -131,6 +158,10 @@ function Update(){
             }
         }
     })
+    if(isColliding(player, goal)){
+        console.log("tocjed");
+        goal.goalTouched();
+    }
     let currentTime = Date.now();
     let deltaTime = (currentTime - previousTime) / 1000;
     if(player.rotating){
@@ -152,15 +183,14 @@ function Update(){
     if(keys.s.pressed){
         player.position.y += playerSpeed;
     }
-    if(isColliding(player, testBoundary)){
-        resetPlayerPos();
-    }
 }
 function resetPlayerPos(){
     player.position = {x: player.startPositon.x,
         y: player.startPositon.y};
+    deaths++;
 }
 Update();
+updateDeaths();
 window.addEventListener('keydown', (ev) => {
 //key down logic
 switch(ev.key){
@@ -175,6 +205,10 @@ switch(ev.key){
         break;
     case 'd':
         keys.d.pressed = true;
+        break;
+    case 'r':
+        resetPlayerPos();
+        //add death
         break;
 }
 window.addEventListener('keyup', (ev) => {
