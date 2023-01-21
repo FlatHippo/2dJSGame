@@ -1,43 +1,46 @@
 const canvas = document.querySelector('canvas');
 const context = canvas.getContext('2d');
 
-canvas.width = 1024;
-canvas.height = 576;
+canvas.width = 1920;
+canvas.height = 1080;
 
-context.fillStyle = 'white';
-context.fillRect(0, 0, canvas.width, canvas.height);
-
+//#region images
 const backgroundImg = new Image();
 backgroundImg.src = './images/background.jpg';
 
+const playerImg = new Image();
+playerImg.src = './images/player.png';
+//#endregion
+
+
 class Sprite{
-    constructor({position, image}){
+    constructor({position, image, scale}){
         this.position = position;
         this.image = image;
-
+        this.scale = scale;
     }
 
     draw(){
-        context.drawImage(
-            this.image, 
-            //crop
-            0,
-            0,
-            this.image.width * 2.5,
-            this.image.height * 2.5,
-            //pos
-            0,
-            0,
-            canvas.width * 2.5,
-            canvas.height * 2.5
-            );
+        if(this.scale != null){
+            context.drawImage(this.image, this.position.x, this.position.y, this.image.width * this.scale.x, this.image.height * this.scale.y);
+        }
+        else{
+            context.drawImage(this.image, this.position.x, this.position.y);
+        }
     }
 
-}
+};
 
 const background = new Sprite(
     {position: {x: 0, y: 0},
      image: backgroundImg,
+     scale: {x: 1, y: 1}
+    });
+const player = new Sprite(
+    {
+        position: {x: 200, y: 350},
+        image: playerImg,
+        scale: {x: 1, y: 1}
     });
 
 const keys = {
@@ -55,16 +58,26 @@ const keys = {
     }
 
 };
-
-function animate(){
-    window.requestAnimationFrame(animate);
+function Update(){
+    let playerSpeed = 3;
+    window.requestAnimationFrame(Update);
     background.draw();
+    player.draw();
     if(keys.w.pressed){
-        
+        player.position.y -= playerSpeed;
+    }
+    if(keys.a.pressed){
+        player.position.x -= playerSpeed;
+    }
+    if(keys.d.pressed){
+        player.position.x += playerSpeed;
+    }
+    if(keys.s.pressed){
+        player.position.y += playerSpeed;
     }
 }
 
-animate();
+Update();
 window.addEventListener('keydown', (ev) => {
 //key down logic
 switch(ev.key){
@@ -80,7 +93,6 @@ switch(ev.key){
     case 'd':
         keys.d.pressed = true;
         break;
-        
 }
 window.addEventListener('keyup', (ev) => {
     //key down logic
