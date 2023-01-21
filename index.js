@@ -8,6 +8,8 @@ backgroundImg.src = './images/background.jpg';
 const playerImg = new Image();
 playerImg.src = './images/player.png';
 let playerSpeed = 2.5;
+let boundaries = [];
+
 //#endregion
 
 
@@ -116,6 +118,14 @@ function Update(){
     background.draw();
     testBoundary.draw();
     player.draw();
+    boundaries.forEach(boundary => {
+        if(boundary){
+            boundary.draw();
+            if(isColliding(player, boundary)){
+                resetPlayerPos();
+            }
+        }
+    })
     let currentTime = Date.now();
     let deltaTime = (currentTime - previousTime) / 1000;
     if(player.rotating){
@@ -138,11 +148,13 @@ function Update(){
         player.position.y += playerSpeed;
     }
     if(isColliding(player, testBoundary)){
-        player.position = {x: player.startPositon.x,
-                           y: player.startPositon.y};
+        resetPlayerPos();
     }
 }
-
+function resetPlayerPos(){
+    player.position = {x: player.startPositon.x,
+        y: player.startPositon.y};
+}
 Update();
 window.addEventListener('keydown', (ev) => {
 //key down logic
