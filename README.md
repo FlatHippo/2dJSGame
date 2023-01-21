@@ -1,2 +1,2 @@
-# 2dJSGame
+# Switcheroo
 first javascript web browser game
