@@ -80,7 +80,7 @@ class Timer{
         player.rotating = true;
         playerSpeed = 0;
         setTimeout(() => {player.rotating = false
-                          playerSpeed = newSpeed}, 1000);
+                          playerSpeed = newSpeed}, 333);
         ;
     }
 }
@@ -153,7 +153,6 @@ let previousTime = Date.now();
 function Update(){
     window.requestAnimationFrame(Update);
     background.draw();
-    updateDeaths();
     player.draw();
     goal.draw();
     boundaries.forEach(boundary => {
@@ -164,12 +163,13 @@ function Update(){
             }
         }
     })
+    updateDeaths();
     if(isColliding(player, goal)){
         console.log("tocjed");
         goal.goalTouched();
     }
     let currentTime = Date.now();
-    let deltaTime = (currentTime - previousTime) / 1000;
+    let deltaTime = (currentTime - previousTime) / 333;
     if(player.rotating){
         player.rotation += player.rotationSpeed * deltaTime;
     }
