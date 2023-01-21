@@ -12,6 +12,7 @@ class Goal{
     goalTouched(){
         currentLevel++;
         initializeLevel(currentLevel);
+        resetPlayerPos();
     }
     updateGoal(){
         this.position = {x: goalPositions[currentLevel][1][0], y: goalPositions[currentLevel][1][1]};

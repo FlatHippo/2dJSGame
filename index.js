@@ -58,17 +58,23 @@ class Boundary{
     }
 }
 class Timer{
-    static countdown = 10;
+    static countdown = 5000;
     constructor(){
         this.activateTimer();
     }
     activateTimer(){
-        setInterval(this.randomizePlayerSpeed, Timer.countdown * 1000);
+        setInterval(this.randomizePlayerSpeed, Timer.countdown);
     }
     randomizePlayerSpeed(){
         let newSpeed;
+        playerSpeed = Math.abs(playerSpeed);
         do{
-            newSpeed = Math.random() * 7 - 2;
+            newSpeed = Math.random() * 7 + 1;
+            let r = Math.random();
+            if(r > 0.5){
+                newSpeed *= -1;
+            }
+            
         }
         while((newSpeed >= -0.5 && newSpeed <= 0.5) || (playerSpeed - newSpeed <= 0.8 && playerSpeed - newSpeed >= -0.8));
         player.rotating = true;
