@@ -21,7 +21,7 @@ let tempBoundary = null;
         if(boundaryStart)
         {
             boundaryStart = false;
-            console.log(boundary);
             boundaries.push(boundary);
+            console.log(boundaries);
         }
     });

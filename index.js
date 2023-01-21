@@ -9,10 +9,15 @@ const playerImg = new Image();
 playerImg.src = './images/player.png';
 let playerSpeed = 2.5;
 let boundaries = [];
+let currentLevel = null;
+let levels = [];
 
 //#endregion
 
-
+function initializeLevel(levelNum){
+    levels[levelNum]
+}
+initializeLevel(0);
 class Sprite{
     constructor({position, startPositon, image, scale, rotation = 0}){
         this.position = position;
