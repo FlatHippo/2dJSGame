@@ -18,44 +18,7 @@ level1Boundaries = [
         "image": {}
     }
 ]
-level2Boundaries = [
-    {
-        "position": {
-            "x": 21,
-            "y": 24
-        },
-        "width": 1888,
-        "height": 356,
-        "image": {}
-    },
-    {
-        "position": {
-            "x": 38,
-            "y": 681
-        },
-        "width": 1864,
-        "height": 383,
-        "image": {}
-    },
-    {
-        "position": {
-            "x": 1190,
-            "y": 417
-        },
-        "width": 538,
-        "height": 88,
-        "image": {}
-    },
-    {
-        "position": {
-            "x": 462,
-            "y": 556
-        },
-        "width": 504,
-        "height": 78,
-        "image": {}
-    }
-]
+
 
 let levels = [];
 class Level{
