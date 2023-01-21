@@ -1,13 +1,10 @@
+//#region  initialization
 const canvas = document.querySelector('canvas');
 const context = canvas.getContext('2d');
-
 canvas.width = 1920;
 canvas.height = 1080;
-
-//#region images
 const backgroundImg = new Image();
 backgroundImg.src = './images/background.jpg';
-
 const playerImg = new Image();
 playerImg.src = './images/player.png';
 //#endregion
@@ -21,6 +18,7 @@ class Sprite{
     }
 
     draw(){
+        //if the sprite has a scale, adapt
         if(this.scale != null){
             context.drawImage(this.image, this.position.x, this.position.y, this.image.width * this.scale.x, this.image.height * this.scale.y);
         }
