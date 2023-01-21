@@ -11,8 +11,17 @@ class Goal{
     }
     goalTouched(){
         currentLevel++;
-        initializeLevel(currentLevel);
-        resetPlayerPos();
+        if(levels[currentLevel] == null){
+            context.font = "200px Sofia Sans Regular";
+            context.fillStyle = 'green';
+            context.fillText("YOU WIN!", canvas.width / 2 - 400, canvas.height / 2);
+            player.rotating = true;
+            playerSpeed = 0;
+        }
+        else{
+            initializeLevel(currentLevel);
+            resetPlayerPos();
+        }
     }
     updateGoal(){
         this.position = {x: goalPositions[currentLevel][1][0], y: goalPositions[currentLevel][1][1]};

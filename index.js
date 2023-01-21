@@ -165,7 +165,6 @@ function Update(){
     })
     updateDeaths();
     if(isColliding(player, goal)){
-        console.log("tocjed");
         goal.goalTouched();
     }
     let currentTime = Date.now();
