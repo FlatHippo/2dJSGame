@@ -1,6 +1,6 @@
 const goalImg = new Image();
 goalImg.src = './images/goal.png';
-let goalPositions = [[0,[1552,430]], [1,[1770,430]]];
+let goalPositions = [[0,[1552, 430]], [1,[1770, 430]], [2,[1400, 950]], [3,[1685, 512]]];
 let currentLevel = 0;
 class Goal{
     constructor({position, width, height}){
