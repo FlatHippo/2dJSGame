@@ -1,8 +1,8 @@
 //#region  initialization
 const canvas = document.querySelector('canvas');
 const context = canvas.getContext('2d');
-canvas.width = 1920;
-canvas.height = 1080;
+canvas.width = 1900;
+canvas.height = 1060;
 const backgroundImg = new Image();
 backgroundImg.src = './images/background.jpg';
 const playerImg = new Image();
